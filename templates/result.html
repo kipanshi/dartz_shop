@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block body %}
+<h3>Ваш заказ:</h3>
+
+{% for error in errors %}
+  <p class=error><strong>Исправьте Ваш заказ:</strong> {{ error }}
+{% endfor %}
+
+<table style="text-align: center;">
+  <thead>
+      <tr class="head">
+        <td>Название</td>
+        <td colspan="2">Описание</td>
+        <td>Ваш заказ</td>
+      </tr>
+  </thead>
+  <tbody>
+    {% for item, amount in order %}
+    <tr>
+      <td>{{ item.name }}</td>
+      <td><img src="{{ item.image_url }}" width="100" height="100" style="padding: 5px;"/></td>
+      <td>{{ item.description }}</td>
+      <td>{{ amount }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br/>
+<b> Контактный email:</b><br/>
+<p class="indented">{{ email }}</p>
+<b> Контактный телефон:</b><br/>
+<p class="indented">{{ phone }}</p>
+<b> Адрес доставки и дополнительная информация:</b><br/>
+<p class="indented">{{ delivery_info }}</p>
+<hr/>
+<p>
+Заявка отправлена и в самое ближайшее время с Вами свяжутся
+по поводу заказа.
+</p>
+
+<a href="{{ url_for('index') }}">Сделать еще один заказ</a>
+
+{% endblock %}

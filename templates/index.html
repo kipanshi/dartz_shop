@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block body %}
+
+{% for error in errors %}
+  <p class=error><strong>Исправьте Ваш заказ:</strong> {{ error }}
+{% endfor %}
+
+<form action="{{ url_for('result') }}">
+  <table style="text-align: center;">
+    <thead>
+        <tr class="head">
+          <td>Название</td>
+          <td colspan="2">Описание</td>
+          <td>Наличие</td>
+          <td>Ваш заказ</td>
+        </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td><img src="{{ item.image_url }}" width="100" height="100" style="padding: 5px;"/></td>
+        <td>{{ item.description }}</td>
+        <td>{% if item.count %}Есть{% else %}Скоро будет{% endif %}</td>
+        <td><input style="display:{% if item.count %}block;{% else %}none;{% endif %}"type="text" name="item_{{ item.pk }}" value="{% if errors %}{{ order[item.pk] }}{% endif %}"/></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <br/>
+  <b>Ваш Email:</b><br/>
+  <input type="email" name="email" value="{% if errors %}{{ email }}{% endif %}">
+
+  <br/>
+  <b>Телефон:</b><br/>
+  <input type="text" name="phone" value="{% if errors %}{{ phone }}{% endif %}"/>
+
+  <br/>
+  <b>Адрес доставки и дополнительная информация:</b><br/>
+  <textarea name="delivery_info" cols="70" rows="3">{% if errors %}{{ delivery_info }}{% endif %}</textarea>
+
+  <input class="submit-btn" type="submit" value="Заказать"/>
+
+</form>
+{% endblock %}
