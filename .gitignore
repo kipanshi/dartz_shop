@@ -1,3 +1,4 @@
 *.pyc
 *.py~
 local_settings.py
+items.csv

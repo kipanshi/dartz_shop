@@ -97,15 +97,16 @@ def requires_auth(f):
 #=============================
 class Item(object):
 
-    def __init__(self, pk, name, image_url, description, count):
+    def __init__(self, pk, name, image_url, description, count, price):
         self.pk = pk
         self.name = name
         self.image_url = image_url
         self.description = description
         self.count = int(count)
+	self.price = price
 
     def as_csv_row(self):
-        return (self.name, self.image_url, self.description, str(self.count))
+        return (self.name, self.image_url, self.description, str(self.count), self.price)
 
     def __repr__(self):
         return '<Item %r>' % self.name
@@ -129,10 +130,10 @@ class ItemStorage(object):
         with open(DB_NAME, 'r') as f:
             reader = unicode_csv_reader(f.readlines())
         for pk, row in enumerate(reader):
-            name, image_url, description, count = row
+            name, image_url, description, count, price = row
             self.items.append(
                 Item(pk=pk, name=name, image_url=image_url,
-                     description=description, count=count))
+                     description=description, count=count, price=price))
 
     def close(self, readonly=True):
         if not readonly:

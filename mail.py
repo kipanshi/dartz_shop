@@ -17,6 +17,7 @@ def get_mime_multipart_message(recipient, subject, body, codepage):
     message = MIMEMultipart()
     message['From'] = settings.MAIL_USER
     message['To'] = recipient
+    message['Reply-To'] = settings.MAIL_USER_FROM
     message['Date'] = formatdate(localtime=True)
     message['Subject'] = Header(subject, codepage)
 
