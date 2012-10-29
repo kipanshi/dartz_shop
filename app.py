@@ -9,8 +9,7 @@ sys.path.append('/home2/u5625/dartzspbru/www/cgi-bin/dartz-shop/src')
 import csv
 from functools import wraps
 
-from flask import Flask, request, Response, session, g, redirect, url_for, \
-     abort, render_template, flash, Request
+from flask import Flask, request, Response, g, render_template, Request
 
 from mail import send_mail
 import dartzshop_settings as settings
@@ -103,10 +102,11 @@ class Item(object):
         self.image_url = image_url
         self.description = description
         self.count = int(count)
-	self.price = price
+        self.price = int(price)
 
     def as_csv_row(self):
-        return (self.name, self.image_url, self.description, str(self.count), self.price)
+        return (self.name, self.image_url, self.description,
+                str(self.count), self.price)
 
     def __repr__(self):
         return '<Item %r>' % self.name
@@ -260,7 +260,7 @@ def result():
                 elif amount > 0:
                     context['order'].append((item, amount))
 
-    # If order is empty, redirect
+    # If order is empty, show some message
     if not context['order'] and not context['delivery_info']:
         context['errors'] = (u'Ну закажите же что нибудь',)
 
@@ -269,6 +269,8 @@ def result():
                                  u'заказываемых ништяков')
 
     if not context['errors']:
+        context['order_total'] = sum([item.price * amount
+                                      for item, amount in context['order']])
         # Send email and render template
         if not DEBUG_MODE:
             subject = u'Dartz интернет магазин: Новый заказ'

@@ -3,8 +3,8 @@
 <table style="text-align: center;">
   <thead style="background: #999;">
       <tr class="head">
-        <td>Название</td>
-        <td colspan="2">Описание</td>
+        <td colspan="3">Наименование</td>
+        <td>Цена</td>
         <td>Количество</td>
       </tr>
   <thead>
@@ -13,13 +13,17 @@
     <tr>
       <td>{{ item.name }}</td>
       <td><img src="{{ item.image_url }}" width="100" height="100" style="padding: 5px;"/></td>
-      <td>{{ item.description }}</td>
+      <td>{{ item.description|safe() }}</td>
+      <td>{{ item.price }} Р</td>
       <td>{{ amount }}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 
+<br/>
+<b> Общая стоимость: </b> {{ order_total }} Р
+<br/>
 <br/>
 <b> Контактный email:</b><br/>
 <p class="indented">{{ email }}</p>
