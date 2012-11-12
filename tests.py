@@ -14,6 +14,7 @@ class ValidationToolsTest(unittest.TestCase):
         self.assertFalse(is_valid_email(u'Jack@foo'))
 
         self.assertTrue(is_valid_email(u'Jack@foo.com'))
+        self.assertTrue(is_valid_email(u'Jack.Bird@foo.com'))
 
     def test_is_valid_phone(self):
         from app import is_valid_phone

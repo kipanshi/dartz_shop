@@ -168,7 +168,7 @@ def teardown_request(exception):
 #     VALIDATION TOOLS
 #============================
 def is_valid_email(value):
-    if re.match('^[a-zA-Z0-9_-]+@[a-z0-9_-]+\.[a-z]+$', value):
+    if re.match('^[\.a-zA-Z0-9_-]+@[a-z0-9_-]+\.[a-z]+$', value):
         return True
 
 
